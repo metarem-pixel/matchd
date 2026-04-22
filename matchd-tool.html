@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matchd — Sponsorship Tools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #111008;
+    --white: #F5EFE6;
+    --green: #FF6B4A;
+    --green-dim: #2A1208;
+    --green-mid: #CC4A2A;
+    --gray: #1E1A14;
+    --gray-mid: #2A2420;
+    --gray-light: #6A5A50;
+    --border: #2E2820;
+    --font: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font);
+    min-height: 100vh;
+    padding: 48px 24px;
+  }
+
+  .container { max-width: 680px; margin: 0 auto; }
+
+  /* HEADER */
+  .header { margin-bottom: 40px; }
+
+  .logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--green);
+    letter-spacing: .08em;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h1 {
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -.02em;
+    margin-bottom: 12px;
+  }
+
+  h1 span { color: var(--green); }
+
+  .subtitle {
+    font-size: 16px;
+    color: var(--gray-light);
+    line-height: 1.6;
+    max-width: 480px;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--gray);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 28px;
+    border: 0.5px solid var(--border);
+  }
+
+  .tab {
+    flex: 1;
+    padding: 11px 16px;
+    border-radius: 9px;
+    border: none;
+    background: transparent;
+    color: var(--gray-light);
+    font-family: var(--font);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all .2s;
+    font-weight: 400;
+  }
+
+  .tab.active {
+    background: var(--green);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .tab:not(.active):hover { color: var(--white); }
+
+  /* PANELS */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* SHARED */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gray-light);
+    letter-spacing: .08em;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .card {
+    background: var(--gray);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+
+  /* CALCULATOR */
+  .sport-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .sport-btn {
+    padding: 6px 14px;
+    border-radius: 100px;
+    border: 0.5px solid var(--border);
+    background: transparent;
+    color: var(--gray-light);
+    font-family: var(--font);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+
+  .sport-btn:hover { border-color: #444; color: var(--white); }
+  .sport-btn.on { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+
+  .slider-row { margin-bottom: 20px; }
+
+  .slider-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+
+  .slider-label { font-size: 13px; color: var(--gray-light); }
+
+  .slider-val {
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    outline: none;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--green);
+    cursor: pointer;
+    transition: transform .1s;
+  }
+
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+  input[type=range]::-moz-range-thumb {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--green);
+    cursor: pointer;
+    border: none;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .result-card {
+    background: var(--gray-mid);
+    border-radius: 12px;
+    padding: 16px;
+    border: 0.5px solid var(--border);
+  }
+
+  .result-card.hero { background: var(--green-dim); border-color: var(--green); }
+
+  .result-val {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 4px;
+    letter-spacing: -.02em;
+  }
+
+  .result-card.hero .result-val { color: var(--green); }
+  .result-lbl { font-size: 11px; color: var(--gray-light); line-height: 1.4; }
+  .result-card.hero .result-lbl { color: #FFB8A0; }
+
+  .comp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .comp-table tr { border-bottom: 0.5px solid var(--border); }
+  .comp-table tr:last-child { border-bottom: none; }
+  .comp-table td { padding: 9px 0; vertical-align: middle; }
+  .comp-table td:first-child { color: var(--gray-light); width: 40%; }
+  .comp-table td.them { color: #ff6b6b; font-family: var(--mono); font-size: 12px; text-align: center; }
+  .comp-table td.us { color: var(--green); font-family: var(--mono); font-size: 12px; text-align: right; }
+  .comp-table td.vs { color: var(--gray-light); font-size: 11px; text-align: center; }
+
+  .verdict-box {
+    border: 0.5px solid var(--green);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #a0f0c8;
+    background: var(--green-dim);
+    margin-top: 16px;
+  }
+
+  /* MATCHER */
+  textarea {
+    width: 100%;
+    background: var(--black);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--white);
+    resize: none;
+    outline: none;
+    line-height: 1.65;
+    transition: border-color .2s;
+    margin-bottom: 20px;
+  }
+
+  textarea:focus { border-color: var(--green); }
+  textarea::placeholder { color: var(--gray-light); }
+
+  .row-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .field { display: flex; flex-direction: column; gap: 8px; }
+
+  select, input[type=number] {
+    background: var(--black);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--white);
+    outline: none;
+    transition: border-color .2s;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  select:focus, input[type=number]:focus { border-color: var(--green); }
+  .select-wrap { position: relative; }
+  .select-wrap::after {
+    content: '↓';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: var(--gray-light);
+    pointer-events: none;
+  }
+
+  /* BUTTONS */
+  .btn-match {
+    width: 100%;
+    padding: 16px;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .15s, transform .1s;
+    letter-spacing: -.01em;
+  }
+
+  .btn-match:hover { opacity: .85; transform: translateY(-1px); }
+  .btn-match:active { transform: scale(.98); }
+  .btn-match:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 14px 32px;
+    background: var(--green);
+    color: #fff;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 100px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity .15s, transform .1s;
+  }
+
+  .cta-btn:hover { opacity: .85; transform: translateY(-1px); }
+
+  .cta-section {
+    margin-top: 40px;
+    text-align: center;
+    padding: 40px 28px;
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    background: var(--gray);
+  }
+
+  .cta-section p { font-size: 20px; font-weight: 500; margin-bottom: 8px; letter-spacing: -.01em; }
+  .cta-section .sub { font-size: 14px; color: var(--gray-light); margin-bottom: 24px; font-weight: 400; }
+
+  /* THINKING */
+  .thinking { display: none; text-align: center; padding: 40px 0; }
+  .thinking.show { display: block; }
+  .dots { display: inline-flex; gap: 6px; margin-bottom: 12px; }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green);
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+  .dot:nth-child(2) { animation-delay: .2s; }
+  .dot:nth-child(3) { animation-delay: .4s; }
+  @keyframes pulse {
+    0%, 100% { opacity: .3; transform: scale(.8); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+  .thinking-text { font-size: 13px; color: var(--gray-light); font-family: var(--mono); }
+
+  /* MATCHER RESULTS */
+  .match-result { display: none; animation: fadeUp .4s ease; }
+  .match-result.show { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .match-header {
+    background: var(--green-dim);
+    border: 0.5px solid var(--green);
+    border-radius: 16px;
+    padding: 24px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .match-header h2 { font-size: 20px; font-weight: 500; color: var(--green); margin-bottom: 4px; }
+  .match-header p { font-size: 11px; color: #FFB8A0; font-family: var(--mono); letter-spacing: .06em; }
+  .score-num { font-size: 42px; font-weight: 500; color: var(--green); line-height: 1; }
+  .score-lbl { font-size: 10px; color: #FFB8A0; font-family: var(--mono); letter-spacing: .06em; text-align: right; }
+
+  .athletes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .athlete-card {
+    background: var(--gray-mid);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .athlete-sport { font-family: var(--mono); font-size: 10px; color: var(--green); letter-spacing: .06em; margin-bottom: 6px; }
+  .athlete-followers { font-size: 20px; font-weight: 500; color: var(--white); margin-bottom: 2px; }
+  .athlete-reach { font-size: 11px; color: var(--gray-light); }
+
+  .roi-bar {
+    background: var(--gray-mid);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .roi-item { text-align: center; }
+  .roi-val { font-size: 26px; font-weight: 500; color: var(--green); margin-bottom: 4px; }
+  .roi-lbl { font-size: 10px; color: var(--gray-light); font-family: var(--mono); letter-spacing: .04em; }
+  .roi-div { width: 1px; height: 40px; background: var(--border); }
+
+  .action-row { display: flex; gap: 12px; margin-top: 8px; }
+  .btn-secondary {
+    flex: 1; padding: 13px;
+    background: transparent;
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    font-family: var(--font);
+    font-size: 13px;
+    color: var(--gray-light);
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .btn-secondary:hover { border-color: var(--green); color: var(--green); }
+  .btn-cta-sm {
+    flex: 1; padding: 13px;
+    background: var(--green);
+    border: none; border-radius: 10px;
+    font-family: var(--font);
+    font-size: 13px; color: #fff; font-weight: 600;
+    cursor: pointer; transition: opacity .15s;
+    text-decoration: none; text-align: center;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .btn-cta-sm:hover { opacity: .85; }
+
+  .error-msg {
+    display: none;
+    background: #1a0505;
+    border: 0.5px solid #5a1a1a;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #ff8888;
+    margin-top: 12px;
+  }
+  .error-msg.show { display: block; }
+
+  .result-text { font-size: 14px; color: var(--white); line-height: 1.75; }
+
+  .footer {
+    margin-top: 48px;
+    text-align: center;
+    font-size: 12px;
+    color: #444;
+    font-family: var(--mono);
+  }
+
+  @media (max-width: 560px) {
+    .results-grid { grid-template-columns: 1fr; }
+    .row-inputs { grid-template-columns: 1fr; }
+    .athletes-grid { grid-template-columns: 1fr 1fr; }
+    .roi-bar { flex-wrap: wrap; gap: 16px; }
+    .roi-div { display: none; }
+    body { padding: 32px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <span class="logo">MATCHD — SPONSORSHIP TOOLS</span>
+    <h1>Find your sponsor.<br><span>Prove the ROI.</span></h1>
+    <p class="subtitle">Calculate your expected return — or let AI find the perfect athlete for your business. Both in one place.</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('calc')">ROI Calculator</button>
+    <button class="tab" onclick="switchTab('match')">AI Athlete Matcher</button>
+  </div>
+
+  <!-- CALCULATOR PANEL -->
+  <div class="panel active" id="panel-calc">
+
+    <div class="card">
+      <span class="section-label">Sport type</span>
+      <div class="sport-grid" id="sports">
+        <button class="sport-btn on" onclick="setSport(this,1.2)">Fitness / CrossFit</button>
+        <button class="sport-btn" onclick="setSport(this,1.3)">Combat sports</button>
+        <button class="sport-btn" onclick="setSport(this,1.0)">Running / Triathlon</button>
+        <button class="sport-btn" onclick="setSport(this,1.1)">Cycling</button>
+        <button class="sport-btn" onclick="setSport(this,0.9)">Amateur football</button>
+        <button class="sport-btn" onclick="setSport(this,1.15)">Yoga / Wellness</button>
+      </div>
+
+      <span class="section-label">Deal parameters</span>
+
+      <div class="slider-row">
+        <div class="slider-meta">
+          <span class="slider-label">Sponsorship budget</span>
+          <span class="slider-val" id="budget-out">€300</span>
+        </div>
+        <input type="range" id="budget" min="100" max="2000" step="50" value="300" oninput="calc()">
+      </div>
+
+      <div class="slider-row">
+        <div class="slider-meta">
+          <span class="slider-label">Athlete followers</span>
+          <span class="slider-val" id="followers-out">5,000</span>
+        </div>
+        <input type="range" id="followers" min="1000" max="50000" step="500" value="5000" oninput="calc()">
+      </div>
+
+      <div class="slider-row">
+        <div class="slider-meta">
+          <span class="slider-label">Number of posts</span>
+          <span class="slider-val" id="posts-out">3 posts</span>
+        </div>
+        <input type="range" id="posts" min="1" max="10" step="1" value="3" oninput="calc()">
+      </div>
+    </div>
+
+    <div class="results-grid">
+      <div class="result-card"><div class="result-val" id="reach">—</div><div class="result-lbl">Total audience reach</div></div>
+      <div class="result-card"><div class="result-val" id="cpm">—</div><div class="result-lbl">Cost per 1,000 contacts</div></div>
+      <div class="result-card hero"><div class="result-val" id="adval">—</div><div class="result-lbl">Ad equivalent value</div></div>
+      <div class="result-card hero"><div class="result-val" id="roi">—</div><div class="result-lbl">Your ROI coefficient</div></div>
+    </div>
+
+    <div class="card">
+      <span class="section-label">Matchd vs. targeted advertising</span>
+      <table class="comp-table">
+        <tr>
+          <td>Reach</td>
+          <td class="them" id="cmp-them">—</td>
+          <td class="vs">vs</td>
+          <td class="us" id="cmp-us">—</td>
+        </tr>
+        <tr><td>Audience trust</td><td class="them">Banner ad</td><td class="vs">vs</td><td class="us">Athlete rec.</td></tr>
+        <tr><td>ROI report</td><td class="them">No guarantee</td><td class="vs">vs</td><td class="us">Guaranteed</td></tr>
+      </table>
+      <div class="verdict-box" id="verdict">Move the sliders to calculate your ROI.</div>
+    </div>
+
+    <div class="cta-section">
+      <p>Ready to find your athlete?</p>
+      <p class="sub">Get 3 matched proposals in 48 hours — or it's free.</p>
+      <a href="https://tally.so/r/MeJW1p" class="cta-btn">Get Matchd →</a>
+    </div>
+
+  </div>
+
+  <!-- MATCHER PANEL -->
+  <div class="panel" id="panel-match">
+
+    <div class="card">
+      <span class="section-label">Describe your business & target audience</span>
+      <textarea id="desc" rows="4" placeholder="e.g. We run a local physiotherapy clinic in Munich. Our clients are active adults aged 28–45 who train regularly and care about injury prevention..."></textarea>
+
+      <div class="row-inputs">
+        <div class="field">
+          <span class="section-label" style="margin-bottom:0">Monthly budget</span>
+          <input type="number" id="m-budget" value="300" min="50" max="5000">
+        </div>
+        <div class="field">
+          <span class="section-label" style="margin-bottom:0">City</span>
+          <div class="select-wrap">
+            <select id="city">
+              <option>Munich</option>
+              <option>Berlin</option>
+              <option>Hamburg</option>
+              <option>Vienna</option>
+              <option>Prague</option>
+              <option>Zurich</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-match" id="match-btn" onclick="runMatch()">Find my athlete match →</button>
+      <div class="error-msg" id="error-msg">Please describe your business before matching — a few sentences is enough.</div>
+    </div>
+
+    <div class="thinking" id="thinking">
+      <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="thinking-text" id="thinking-text">Analysing your audience profile...</div>
+    </div>
+
+    <div class="match-result" id="match-result">
+
+      <div class="match-header">
+        <div>
+          <h2 id="res-title">Your match</h2>
+          <p>AI RECOMMENDATION · MATCHD</p>
+        </div>
+        <div style="text-align:right">
+          <div class="score-num" id="res-score">—</div>
+          <div class="score-lbl">MATCH %</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:12px">
+        <span class="section-label">Why this athlete type</span>
+        <div class="result-text" id="res-why">—</div>
+      </div>
+
+      <div class="card" style="margin-bottom:12px">
+        <span class="section-label">Recommended athlete profiles</span>
+        <div class="athletes-grid" id="athletes-grid"></div>
+      </div>
+
+      <div class="card" style="margin-bottom:12px">
+        <span class="section-label">Expected ROI for your budget</span>
+        <div class="roi-bar">
+          <div class="roi-item"><div class="roi-val" id="m-reach">—</div><div class="roi-lbl">PEOPLE REACHED</div></div>
+          <div class="roi-div"></div>
+          <div class="roi-item"><div class="roi-val" id="m-adval">—</div><div class="roi-lbl">AD EQUIVALENT</div></div>
+          <div class="roi-div"></div>
+          <div class="roi-item"><div class="roi-val" id="m-coeff">—</div><div class="roi-lbl">ROI COEFFICIENT</div></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <span class="section-label">Matchd recommendation</span>
+        <div class="result-text" id="res-rec">—</div>
+      </div>
+
+      <div class="action-row">
+        <button class="btn-secondary" onclick="resetMatch()">← New search</button>
+        <a href="https://tally.so/r/MeJW1p" class="btn-cta-sm" target="_blank">Get matched now →</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="footer">matchd.eu · sport meets business · proven.</div>
+
+</div>
+
+<script>
+// ── TABS ──────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', (i === 0 && tab === 'calc') || (i === 1 && tab === 'match'));
+  });
+  document.getElementById('panel-calc').classList.toggle('active', tab === 'calc');
+  document.getElementById('panel-match').classList.toggle('active', tab === 'match');
+}
+
+// ── CALCULATOR ────────────────────────────────────────
+let sportMult = 1.2;
+
+function setSport(btn, mult) {
+  document.querySelectorAll('.sport-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  sportMult = mult;
+  calc();
+}
+
+function fmt(n) { return new Intl.NumberFormat('en-EU').format(Math.round(n)); }
+
+function calc() {
+  const budget = parseInt(document.getElementById('budget').value);
+  const followers = parseInt(document.getElementById('followers').value);
+  const posts = parseInt(document.getElementById('posts').value);
+
+  document.getElementById('budget-out').textContent = '€' + fmt(budget);
+  document.getElementById('followers-out').textContent = fmt(followers);
+  document.getElementById('posts-out').textContent = posts + (posts === 1 ? ' post' : ' posts');
+
+  const reachRate = 0.18 * sportMult;
+  const totalReach = Math.round(followers * reachRate) * posts;
+  const cpm = 5.5;
+  const adValue = Math.round(totalReach / 1000 * cpm);
+  const roiCoeff = (adValue / budget).toFixed(1);
+  const cpmActual = (budget / totalReach * 1000).toFixed(2);
+  const targetReach = Math.round(budget / cpm * 1000);
+
+  document.getElementById('reach').textContent = fmt(totalReach);
+  document.getElementById('cpm').textContent = '€' + parseFloat(cpmActual).toFixed(2);
+  document.getElementById('adval').textContent = '€' + fmt(adValue);
+  document.getElementById('roi').textContent = roiCoeff + 'x';
+  document.getElementById('cmp-them').textContent = fmt(targetReach);
+  document.getElementById('cmp-us').textContent = fmt(totalReach);
+
+  let verdict = '';
+  if (roiCoeff >= 2) {
+    verdict = `You invest €${fmt(budget)} and reach ~${fmt(totalReach)} people — equivalent to buying €${fmt(adValue)} in targeted ads. Plus the authentic trust of an athlete's recommendation. ROI: ${roiCoeff}x.`;
+  } else if (roiCoeff >= 1) {
+    verdict = `Comparable reach to targeted ads — but with a live athlete endorsement and a guaranteed ROI report after the deal.`;
+  } else {
+    verdict = `Try increasing your budget or choosing an athlete with more followers to make the ROI more compelling.`;
+  }
+  document.getElementById('verdict').textContent = verdict;
+}
+
+calc();
+
+// ── MATCHER ───────────────────────────────────────────
+const thinkingSteps = [
+  'Analysing your audience profile...',
+  'Identifying athlete sport categories...',
+  'Calculating audience overlap...',
+  'Computing ROI projections...',
+  'Preparing your match report...'
+];
+
+let timer = null;
+
+async function runMatch() {
+  const desc = document.getElementById('desc').value.trim();
+  const budget = parseInt(document.getElementById('m-budget').value) || 300;
+  const city = document.getElementById('city').value;
+  const errEl = document.getElementById('error-msg');
+  errEl.classList.remove('show');
+
+  if (desc.length < 20) { errEl.classList.add('show'); return; }
+
+  const btn = document.getElementById('match-btn');
+  btn.disabled = true;
+  document.getElementById('match-result').classList.remove('show');
+
+  const thinking = document.getElementById('thinking');
+  const thinkingText = document.getElementById('thinking-text');
+  thinking.classList.add('show');
+  let i = 0;
+  thinkingText.textContent = thinkingSteps[0];
+  timer = setInterval(() => { i = (i + 1) % thinkingSteps.length; thinkingText.textContent = thinkingSteps[i]; }, 1400);
+
+  const system = `You are Matchd AI — a sports sponsorship matching engine for small businesses in Europe.
+Respond ONLY with valid JSON, no markdown, no extra text.
+{
+  "sport_type": "string",
+  "match_score": number (75-97),
+  "title": "string (e.g. Fitness & Wellness Athletes)",
+  "why": "string (2-3 sentences)",
+  "athletes": [
+    {"sport": "string", "followers": "string (e.g. 3,000–8,000)", "reach_per_post": number, "coeff": number},
+    {"sport": "string", "followers": "string", "reach_per_post": number, "coeff": number},
+    {"sport": "string", "followers": "string", "reach_per_post": number, "coeff": number}
+  ],
+  "recommendation": "string (2-3 sentences with specific action)"
+}
+Sport coefficients: Fitness=1.2, Combat=1.3, Running=1.0, Cycling=1.1, Football=0.9, Yoga=1.15
+reach_per_post = followers_midpoint * 0.16 to 0.22 * coeff`;
+
+  const user = `Business: "${desc}"\nBudget: €${budget}\nCity: ${city}\n\nRecommend the best athlete type.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system,
+        messages: [{ role: 'user', content: user }]
+      })
+    });
+
+    const data = await res.json();
+    const r = JSON.parse(data.content[0].text.replace(/```json|```/g, '').trim());
+
+    clearInterval(timer);
+    thinking.classList.remove('show');
+    renderMatch(r, budget);
+
+  } catch(e) {
+    clearInterval(timer);
+    thinking.classList.remove('show');
+    btn.disabled = false;
+    errEl.textContent = 'Something went wrong. Please try again.';
+    errEl.classList.add('show');
+  }
+}
+
+function renderMatch(r, budget) {
+  document.getElementById('res-title').textContent = r.title;
+  document.getElementById('res-score').textContent = r.match_score + '%';
+  document.getElementById('res-why').textContent = r.why;
+  document.getElementById('res-rec').textContent = r.recommendation;
+
+  document.getElementById('athletes-grid').innerHTML = r.athletes.map(a => `
+    <div class="athlete-card">
+      <div class="athlete-sport">${a.sport.toUpperCase()}</div>
+      <div class="athlete-followers">${a.followers}</div>
+      <div class="athlete-reach">~${fmt(a.reach_per_post)} reach/post</div>
+    </div>`).join('');
+
+  const base = r.athletes[0];
+  const reach = base.reach_per_post * 3;
+  const adval = Math.round(reach / 1000 * 5.5);
+  const coeff = (adval / budget).toFixed(1);
+
+  document.getElementById('m-reach').textContent = fmt(reach);
+  document.getElementById('m-adval').textContent = '€' + fmt(adval);
+  document.getElementById('m-coeff').textContent = coeff + 'x';
+
+  document.getElementById('match-btn').disabled = false;
+  document.getElementById('match-result').classList.add('show');
+  document.getElementById('match-result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function resetMatch() {
+  document.getElementById('match-result').classList.remove('show');
+  document.getElementById('desc').value = '';
+  document.getElementById('error-msg').classList.remove('show');
+  document.getElementById('match-btn').disabled = false;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

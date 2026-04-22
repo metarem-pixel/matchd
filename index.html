@@ -8,15 +8,15 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300;1,9..144,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0b0b0b;
-  --white: #f2f0eb;
-  --green: #00e87a;
-  --green-dim: #00281a;
-  --green-mid: #00a855;
-  --gray: #161616;
-  --gray-mid: #222;
-  --muted: #666;
-  --border: #232323;
+  --bg: #111008;
+  --white: #F5EFE6;
+  --green: #FF6B4A;
+  --green-dim: #2A1208;
+  --green-mid: #CC4A2A;
+  --gray: #1E1A14;
+  --gray-mid: #2A2420;
+  --muted: #6A5A50;
+  --border: #2E2820;
   --serif: 'Fraunces', Georgia, serif;
   --sans: 'DM Sans', sans-serif;
   --mono: 'DM Mono', monospace;
@@ -44,7 +44,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(11,11,11,0.9);
+  background: rgba(17,16,8,0.92);
   backdrop-filter: blur(12px);
   border-bottom: 0.5px solid var(--border);
 }
@@ -73,14 +73,14 @@ nav {
 .nav-cta {
   padding: 9px 20px;
   background: var(--green);
-  color: #000 !important;
+  color: #fff !important;
   border-radius: 100px;
   font-weight: 500;
   font-size: 13px !important;
   transition: opacity .15s !important;
 }
 
-.nav-cta:hover { opacity: .85; color: #000 !important; }
+.nav-cta:hover { opacity: .85; color: #fff !important; }
 
 /* ── HERO ── */
 .hero {
@@ -152,7 +152,7 @@ h1 em {
 .btn-primary {
   padding: 15px 32px;
   background: var(--green);
-  color: #000;
+  color: #fff;
   border: none;
   border-radius: 100px;
   font-family: var(--sans);
@@ -276,7 +276,7 @@ h2 em { font-style: italic; color: var(--green); }
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 2px;
-  background: #ff4444;
+  background: #FF6B4A;
   opacity: .6;
 }
 
@@ -424,7 +424,7 @@ h2 em { font-style: italic; color: var(--green); }
 
 .compare-table td.yes { color: var(--green); }
 .compare-table td.no { color: #ff5555; }
-.compare-table td.matchd-col { background: rgba(0,232,122,0.04); }
+.compare-table td.matchd-col { background: rgba(255,107,74,0.06); }
 
 .check { font-size: 16px; }
 
@@ -451,7 +451,7 @@ h2 em { font-style: italic; color: var(--green); }
 }
 
 .who-card.business .who-label { color: var(--green); }
-.who-card.athlete .who-label { color: #7eb8ff; }
+.who-card.athlete .who-label { color: #F5C4A0; }
 
 .who-title {
   font-family: var(--serif);
@@ -480,7 +480,7 @@ h2 em { font-style: italic; color: var(--green); }
   font-size: 12px;
 }
 
-.who-card.athlete .who-list li::before { color: #7eb8ff; }
+.who-card.athlete .who-list li::before { color: #F5C4A0; }
 
 .who-cta {
   margin-top: 28px;
@@ -498,8 +498,8 @@ h2 em { font-style: italic; color: var(--green); }
   border: none;
 }
 
-.who-card.business .who-cta { background: var(--green); color: #000; }
-.who-card.athlete .who-cta { background: #7eb8ff; color: #000; }
+.who-card.business .who-cta { background: var(--green); color: #fff; }
+.who-card.athlete .who-cta { background: #F5C4A0; color: #2A1208; }
 .who-cta:hover { opacity: .85; }
 
 /* ── PRICING ── */
@@ -527,7 +527,7 @@ h2 em { font-style: italic; color: var(--green); }
   top: -1px; left: 50%;
   transform: translateX(-50%);
   background: var(--green);
-  color: #000;
+  color: #fff;
   font-family: var(--mono);
   font-size: 10px;
   font-weight: 500;
@@ -546,7 +546,7 @@ h2 em { font-style: italic; color: var(--green); }
   display: block;
 }
 
-.price-card.featured .price-name { color: #5de8a0; }
+.price-card.featured .price-name { color: #FFB8A0; }
 
 .price-amount {
   font-family: var(--serif);
@@ -586,7 +586,7 @@ h2 em { font-style: italic; color: var(--green); }
 }
 
 .guarantee h2 { margin-bottom: 16px; }
-.guarantee .section-sub { margin: 0 auto 36px; text-align: center; color: #5de8a0; }
+.guarantee .section-sub { margin: 0 auto 36px; text-align: center; color: #FFB8A0; }
 
 /* ── FOOTER ── */
 footer {
@@ -715,7 +715,7 @@ footer {
 
     <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;margin-bottom:12px">SPORT TYPE</div>
     <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px" id="sport-btns">
-      <button onclick="setSportL(this,1.2)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--green);background:var(--green-dim);color:var(--green);font-family:var(--sans);font-size:13px;cursor:pointer">Fitness / CrossFit</button>
+      <button onclick="setSportL(this,1.2)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--green-mid);background:var(--green-dim);color:var(--green);font-family:var(--sans);font-size:13px;cursor:pointer">Fitness / CrossFit</button>
       <button onclick="setSportL(this,1.3)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer">Combat Sports</button>
       <button onclick="setSportL(this,1.0)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer">Running</button>
       <button onclick="setSportL(this,1.1)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer">Cycling</button>
@@ -758,11 +758,11 @@ footer {
       </div>
       <div style="background:var(--green-dim);border-radius:12px;padding:16px;border:0.5px solid var(--green-mid)">
         <div style="font-family:var(--mono);font-size:18px;font-weight:500;color:var(--green);margin-bottom:4px" id="l-adval">—</div>
-        <div style="font-size:11px;color:#5de8a0">Ad equivalent</div>
+        <div style="font-size:11px;color:#FFB8A0">Ad equivalent</div>
       </div>
       <div style="background:var(--green-dim);border-radius:12px;padding:16px;border:0.5px solid var(--green-mid)">
         <div style="font-family:var(--mono);font-size:18px;font-weight:500;color:var(--green);margin-bottom:4px" id="l-roi">—</div>
-        <div style="font-size:11px;color:#5de8a0">ROI coefficient</div>
+        <div style="font-size:11px;color:#FFB8A0">ROI coefficient</div>
       </div>
     </div>
 
@@ -774,10 +774,10 @@ footer {
 
 <style>
 #calc-section input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#00e87a;cursor:pointer;
+  -webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#FF6B4A;cursor:pointer;
 }
 #calc-section input[type=range]::-moz-range-thumb {
-  width:18px;height:18px;border-radius:50%;background:#00e87a;cursor:pointer;border:none;
+  width:18px;height:18px;border-radius:50%;background:#FF6B4A;cursor:pointer;border:none;
 }
 #sport-btns button:hover { opacity:.8; }
 </style>
@@ -793,7 +793,7 @@ function setSportL(btn, mult) {
   });
   btn.style.background = 'var(--green-dim)';
   btn.style.borderColor = 'var(--green)';
-  btn.style.color = '#00e87a';
+  btn.style.color = '#FF6B4A';
   calcL();
 }
 function fmtL(n) { return new Intl.NumberFormat('en-EU').format(Math.round(n)); }
@@ -887,74 +887,6 @@ calcL();
 
 <div class="divider"></div>
 
-<!-- COMPARISON -->
-<section class="section">
-  <span class="section-eyebrow">COMPARISON</span>
-  <h2>Matchd vs<br><em>the alternatives</em></h2>
-  <p class="section-sub">Based on real user reviews from Capterra, G2, and OMR.</p>
-
-  <div class="compare-wrap">
-    <table class="compare-table">
-      <thead>
-        <tr>
-          <th></th>
-          <th class="matchd">Matchd</th>
-          <th>Platform A</th>
-          <th>Platform B</th>
-          <th>Cold outreach</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Transparent pricing</td>
-          <td class="yes matchd-col"><span class="check">✓</span> From €150</td>
-          <td class="no">✗ Hidden</td>
-          <td class="no">✗ Monthly fee</td>
-          <td class="no">✗ Unknown</td>
-        </tr>
-        <tr>
-          <td>ROI report after deal</td>
-          <td class="yes matchd-col"><span class="check">✓</span> Every deal</td>
-          <td class="no">✗ None</td>
-          <td class="no">✗ Broken</td>
-          <td class="no">✗ Manual</td>
-        </tr>
-        <tr>
-          <td>Response guarantee</td>
-          <td class="yes matchd-col"><span class="check">✓</span> 48 hours</td>
-          <td class="no">✗ None</td>
-          <td class="no">✗ None</td>
-          <td class="no">✗ None</td>
-        </tr>
-        <tr>
-          <td>Local matching</td>
-          <td class="yes matchd-col"><span class="check">✓</span> City-level</td>
-          <td class="no">✗ No filter</td>
-          <td class="no">✗ No filter</td>
-          <td class="no">✗ None</td>
-        </tr>
-        <tr>
-          <td>Partial refund if underperformed</td>
-          <td class="yes matchd-col"><span class="check">✓</span> Yes</td>
-          <td class="no">✗ No</td>
-          <td class="no">✗ No</td>
-          <td class="no">✗ No</td>
-        </tr>
-        <tr>
-          <td>No subscription required</td>
-          <td class="yes matchd-col"><span class="check">✓</span> Per deal</td>
-          <td class="no">✗ Required</td>
-          <td class="no">✗ Required</td>
-          <td class="yes">✓ Free</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div style="text-align:center;margin-top:40px">
-    <a href="https://tally.so/r/QKBLkG" class="btn-primary" style="font-size:16px;padding:16px 36px">Start your first deal →</a>
-  </div>
-</section>
 <section class="section" id="who">
   <span class="section-eyebrow">FOR WHO</span>
   <h2>Built for two<br><em>kinds of people</em></h2>
@@ -1052,14 +984,14 @@ calcL();
 </footer>
 
 <!-- STICKY CTA -->
-<div style="position:fixed;bottom:0;left:0;right:0;z-index:200;padding:16px 24px;background:rgba(11,11,11,0.95);backdrop-filter:blur(12px);border-top:0.5px solid #232323;display:flex;justify-content:space-between;align-items:center;gap:16px" id="sticky">
+<div style="position:fixed;bottom:0;left:0;right:0;z-index:200;padding:16px 24px;background:rgba(17,16,8,0.96);backdrop-filter:blur(12px);border-top:0.5px solid #232323;display:flex;justify-content:space-between;align-items:center;gap:16px" id="sticky">
   <div>
     <div style="font-size:14px;font-weight:500">Ready to find your athlete?</div>
     <div style="font-size:12px;color:#666;font-family:'DM Mono',monospace">Munich · From €150 · ROI guaranteed</div>
   </div>
   <div style="display:flex;gap:10px;flex-shrink:0">
-    <a href="https://tally.so/r/ODBvQR" style="padding:10px 18px;border:0.5px solid #333;border-radius:100px;font-size:13px;color:#aaa;text-decoration:none;white-space:nowrap;transition:all .15s" onmouseover="this.style.borderColor='#00e87a';this.style.color='#00e87a'" onmouseout="this.style.borderColor='#333';this.style.color='#aaa'">I'm an Athlete</a>
-    <a href="https://tally.so/r/QKBLkG" style="padding:10px 22px;background:#00e87a;color:#000;border-radius:100px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap">Find my athlete →</a>
+    <a href="https://tally.so/r/ODBvQR" style="padding:10px 18px;border:0.5px solid #333;border-radius:100px;font-size:13px;color:#aaa;text-decoration:none;white-space:nowrap;transition:all .15s" onmouseover="this.style.borderColor='#FF6B4A';this.style.color='#FF6B4A'" onmouseout="this.style.borderColor='#333';this.style.color='#aaa'">I'm an Athlete</a>
+    <a href="https://tally.so/r/QKBLkG" style="padding:10px 22px;background:#FF6B4A;color:#fff;border-radius:100px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap">Find my athlete →</a>
   </div>
 </div>
 
