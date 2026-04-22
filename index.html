@@ -3,483 +3,973 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matchd — ROI Calculator</title>
+<title>Matchd — Sport meets business. Proven.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300;1,9..144,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --black: #0a0a0a;
-    --white: #fafafa;
-    --green: #00c97a;
-    --green-dim: #003d25;
-    --gray: #1c1c1c;
-    --gray-mid: #2e2e2e;
-    --gray-light: #888;
-    --border: #2a2a2a;
-    --font: 'DM Sans', sans-serif;
-    --mono: 'DM Mono', monospace;
-  }
+:root {
+  --bg: #0b0b0b;
+  --white: #f2f0eb;
+  --green: #00e87a;
+  --green-dim: #00281a;
+  --green-mid: #00a855;
+  --gray: #161616;
+  --gray-mid: #222;
+  --muted: #666;
+  --border: #232323;
+  --serif: 'Fraunces', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    background: var(--black);
-    color: var(--white);
-    font-family: var(--font);
-    min-height: 100vh;
-    padding: 48px 24px;
-  }
+html { scroll-behavior: smooth; }
 
-  .container {
-    max-width: 680px;
-    margin: 0 auto;
-  }
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
 
-  .header {
-    margin-bottom: 48px;
-  }
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(11,11,11,0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--border);
+}
 
-  .logo {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--green);
-    letter-spacing: .08em;
-    margin-bottom: 20px;
-    display: block;
-  }
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--green);
+  letter-spacing: .06em;
+  text-decoration: none;
+}
 
-  h1 {
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 500;
-    line-height: 1.15;
-    letter-spacing: -.02em;
-    margin-bottom: 12px;
-  }
+.nav-links { display: flex; gap: 32px; align-items: center; }
 
-  h1 span {
-    color: var(--green);
-  }
+.nav-links a {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .15s;
+  letter-spacing: .01em;
+}
 
-  .subtitle {
-    font-size: 16px;
-    color: var(--gray-light);
-    line-height: 1.6;
-    max-width: 480px;
-  }
+.nav-links a:hover { color: var(--white); }
 
-  .card {
-    background: var(--gray);
-    border: 0.5px solid var(--border);
-    border-radius: 16px;
-    padding: 28px;
-    margin-bottom: 16px;
-  }
+.nav-cta {
+  padding: 9px 20px;
+  background: var(--green);
+  color: #000 !important;
+  border-radius: 100px;
+  font-weight: 500;
+  font-size: 13px !important;
+  transition: opacity .15s !important;
+}
 
-  .section-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: .12em;
-    color: var(--gray-light);
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
+.nav-cta:hover { opacity: .85; color: #000 !important; }
 
-  .sport-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 28px;
-  }
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 40px 80px;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
 
-  .sport-btn {
-    padding: 7px 14px;
-    border-radius: 100px;
-    border: 0.5px solid var(--border);
-    background: transparent;
-    color: var(--gray-light);
-    font-family: var(--font);
-    font-size: 13px;
-    cursor: pointer;
-    transition: all .15s;
-  }
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: .1em;
+  margin-bottom: 32px;
+  border: 0.5px solid var(--green-mid);
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: var(--green-dim);
+  width: fit-content;
+}
 
-  .sport-btn:hover { border-color: #444; color: var(--white); }
+.hero-tag::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: blink 2s ease-in-out infinite;
+}
 
-  .sport-btn.on {
-    background: var(--green-dim);
-    border-color: var(--green);
-    color: var(--green);
-  }
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .3; }
+}
 
-  .slider-row {
-    margin-bottom: 20px;
-  }
+h1 {
+  font-family: var(--serif);
+  font-size: clamp(44px, 8vw, 88px);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -.03em;
+  margin-bottom: 28px;
+  max-width: 800px;
+}
 
-  .slider-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 8px;
-  }
+h1 em {
+  font-style: italic;
+  color: var(--green);
+}
 
-  .slider-label {
-    font-size: 13px;
-    color: var(--gray-light);
-  }
+.hero-sub {
+  font-size: 18px;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 500px;
+  margin-bottom: 48px;
+  font-weight: 300;
+}
 
-  .slider-val {
-    font-family: var(--mono);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--white);
-  }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
-  input[type=range] {
-    -webkit-appearance: none;
-    width: 100%;
-    height: 3px;
-    background: var(--border);
-    border-radius: 2px;
-    outline: none;
-  }
+.btn-primary {
+  padding: 15px 32px;
+  background: var(--green);
+  color: #000;
+  border: none;
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity .15s, transform .1s;
+  letter-spacing: -.01em;
+}
 
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--green);
-    cursor: pointer;
-    transition: transform .1s;
-  }
+.btn-primary:hover { opacity: .85; transform: translateY(-1px); }
 
-  input[type=range]::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-  }
+.btn-outline {
+  padding: 15px 32px;
+  background: transparent;
+  color: var(--white);
+  border: 0.5px solid var(--border);
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: border-color .15s, color .15s;
+}
 
-  input[type=range]::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--green);
-    cursor: pointer;
-    border: none;
-  }
+.btn-outline:hover { border-color: var(--green); color: var(--green); }
 
-  .results-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
+/* ── STATS STRIP ── */
+.stats {
+  background: var(--gray);
+  border-top: 0.5px solid var(--border);
+  border-bottom: 0.5px solid var(--border);
+  padding: 32px 40px;
+  display: flex;
+  justify-content: center;
+  gap: 64px;
+  flex-wrap: wrap;
+}
 
-  .result-card {
-    background: var(--gray-mid);
-    border-radius: 12px;
-    padding: 16px;
-    border: 0.5px solid var(--border);
-  }
+.stat { text-align: center; }
 
-  .result-card.hero {
-    background: var(--green-dim);
-    border-color: var(--green);
-  }
+.stat-num {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--green);
+  font-style: italic;
+  display: block;
+  line-height: 1;
+  margin-bottom: 6px;
+}
 
-  .result-val {
-    font-family: var(--mono);
-    font-size: 22px;
-    font-weight: 500;
-    color: var(--white);
-    margin-bottom: 4px;
-    letter-spacing: -.02em;
-  }
+.stat-lbl {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--mono);
+  letter-spacing: .06em;
+}
 
-  .result-card.hero .result-val {
-    color: var(--green);
-  }
+/* ── SECTION ── */
+.section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 100px 40px;
+}
 
-  .result-lbl {
-    font-size: 11px;
-    color: var(--gray-light);
-    line-height: 1.4;
-  }
+.section-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: .1em;
+  margin-bottom: 16px;
+  display: block;
+}
 
-  .result-card.hero .result-lbl {
-    color: #5de8a0;
-  }
+h2 {
+  font-family: var(--serif);
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  margin-bottom: 20px;
+}
 
-  .comparison-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
+h2 em { font-style: italic; color: var(--green); }
 
-  .comparison-table tr {
-    border-bottom: 0.5px solid var(--border);
-  }
+.section-sub {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 520px;
+  font-weight: 300;
+  margin-bottom: 56px;
+}
 
-  .comparison-table tr:last-child {
-    border-bottom: none;
-  }
+/* ── PROBLEM SECTION ── */
+.pain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
 
-  .comparison-table td {
-    padding: 10px 0;
-    vertical-align: middle;
-  }
+.pain-card {
+  background: var(--gray);
+  border: 0.5px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
 
-  .comparison-table td:first-child {
-    color: var(--gray-light);
-    width: 40%;
-  }
+.pain-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: #ff4444;
+  opacity: .6;
+}
 
-  .comparison-table td.them {
-    color: #ff6b6b;
-    font-family: var(--mono);
-    font-size: 12px;
-    text-align: center;
-  }
+.pain-competitor {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #ff6666;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+}
 
-  .comparison-table td.us {
-    color: var(--green);
-    font-family: var(--mono);
-    font-size: 12px;
-    text-align: right;
-  }
+.pain-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
 
-  .vs-label {
-    color: var(--gray-light);
-    font-size: 11px;
-    text-align: center;
-  }
+.pain-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
 
-  .verdict-box {
-    border: 0.5px solid var(--green);
-    border-radius: 12px;
-    padding: 16px 20px;
-    font-size: 14px;
-    line-height: 1.7;
-    color: #a0f0c8;
-    background: var(--green-dim);
-    margin-top: 16px;
-  }
+/* ── HOW IT WORKS ── */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  margin-bottom: 48px;
+}
 
-  .verdict-box strong {
-    color: var(--green);
-  }
+.step {
+  background: var(--gray);
+  border: 0.5px solid var(--border);
+  padding: 28px 24px;
+  position: relative;
+}
 
-  .cta-section {
-    margin-top: 40px;
-    text-align: center;
-    padding: 40px 28px;
-    border: 0.5px solid var(--border);
-    border-radius: 16px;
-    background: var(--gray);
-  }
+.step:first-child { border-radius: 16px 0 0 16px; }
+.step:last-child { border-radius: 0 16px 16px 0; }
 
-  .cta-section p {
-    font-size: 20px;
-    font-weight: 500;
-    margin-bottom: 8px;
-    letter-spacing: -.01em;
-  }
+.step-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: .06em;
+  margin-bottom: 16px;
+  display: block;
+}
 
-  .cta-section .sub {
-    font-size: 14px;
-    color: var(--gray-light);
-    margin-bottom: 24px;
-  }
+.step-title {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
 
-  .cta-btn {
-    display: inline-block;
-    padding: 14px 32px;
-    background: var(--green);
-    color: #000;
-    font-family: var(--font);
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 100px;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: opacity .15s, transform .1s;
-    letter-spacing: -.01em;
-  }
+.step-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
 
-  .cta-btn:hover { opacity: .85; transform: translateY(-1px); }
-  .cta-btn:active { transform: scale(.98); }
+.step-time {
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--green);
+  letter-spacing: .06em;
+}
 
-  .footer {
-    margin-top: 48px;
-    text-align: center;
-    font-size: 12px;
-    color: #444;
-    font-family: var(--mono);
-  }
+/* ── DIFFERENTIATORS ── */
+.diff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
 
-  @media (max-width: 480px) {
-    .results-grid { grid-template-columns: 1fr; }
-    body { padding: 32px 16px; }
-  }
+.diff-card {
+  background: var(--gray);
+  border: 0.5px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.diff-card.featured {
+  background: var(--green-dim);
+  border-color: var(--green-mid);
+  grid-column: span 2;
+}
+
+.diff-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+  display: block;
+  filter: grayscale(0);
+}
+
+.diff-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.diff-card.featured .diff-title { font-size: 22px; color: var(--green); }
+
+.diff-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+.diff-card.featured .diff-desc { font-size: 15px; color: #8adfb8; max-width: 600px; }
+
+/* ── COMPARISON TABLE ── */
+.compare-wrap {
+  overflow-x: auto;
+  border: 0.5px solid var(--border);
+  border-radius: 16px;
+}
+
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.compare-table th {
+  padding: 16px 20px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 13px;
+  border-bottom: 0.5px solid var(--border);
+  background: var(--gray);
+}
+
+.compare-table th:first-child { color: var(--muted); font-weight: 400; }
+.compare-table th.matchd { color: var(--green); }
+
+.compare-table td {
+  padding: 14px 20px;
+  border-bottom: 0.5px solid var(--border);
+  color: var(--muted);
+  vertical-align: middle;
+}
+
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table td:first-child { color: var(--white); font-size: 13px; }
+
+.compare-table td.yes { color: var(--green); }
+.compare-table td.no { color: #ff5555; }
+.compare-table td.matchd-col { background: rgba(0,232,122,0.04); }
+
+.check { font-size: 16px; }
+
+/* ── FOR WHO ── */
+.who-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.who-card {
+  background: var(--gray);
+  border: 0.5px solid var(--border);
+  border-radius: 16px;
+  padding: 36px;
+}
+
+.who-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.who-card.business .who-label { color: var(--green); }
+.who-card.athlete .who-label { color: #7eb8ff; }
+
+.who-title {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.who-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.who-list li {
+  font-size: 14px;
+  color: var(--muted);
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.who-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-size: 12px;
+}
+
+.who-card.athlete .who-list li::before { color: #7eb8ff; }
+
+.who-cta {
+  margin-top: 28px;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity .15s;
+  border: none;
+}
+
+.who-card.business .who-cta { background: var(--green); color: #000; }
+.who-card.athlete .who-cta { background: #7eb8ff; color: #000; }
+.who-cta:hover { opacity: .85; }
+
+/* ── PRICING ── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.price-card {
+  background: var(--gray);
+  border: 0.5px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+}
+
+.price-card.featured {
+  background: var(--green-dim);
+  border-color: var(--green-mid);
+  position: relative;
+}
+
+.price-badge {
+  position: absolute;
+  top: -1px; left: 50%;
+  transform: translateX(-50%);
+  background: var(--green);
+  color: #000;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 4px 14px;
+  border-radius: 0 0 10px 10px;
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+
+.price-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .08em;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.price-card.featured .price-name { color: #5de8a0; }
+
+.price-amount {
+  font-family: var(--serif);
+  font-size: 42px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.price-card.featured .price-amount { color: var(--green); }
+
+.price-per { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+
+.price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.price-features li {
+  font-size: 13px;
+  color: var(--muted);
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.4;
+}
+
+.price-features li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-size: 12px; }
+.price-card.featured .price-features li { color: #8adfb8; }
+
+/* ── GUARANTEE ── */
+.guarantee {
+  background: var(--green-dim);
+  border: 0.5px solid var(--green-mid);
+  border-radius: 24px;
+  padding: 56px;
+  text-align: center;
+  margin: 0 40px;
+}
+
+.guarantee h2 { margin-bottom: 16px; }
+.guarantee .section-sub { margin: 0 auto 36px; text-align: center; color: #5de8a0; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 0.5px solid var(--border);
+  padding: 48px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--green);
+  letter-spacing: .06em;
+}
+
+.footer-text { font-size: 13px; color: var(--muted); }
+
+/* ── DIVIDER ── */
+.divider {
+  height: 0.5px;
+  background: var(--border);
+  margin: 0 40px;
+}
+
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 100px 20px 60px; }
+  .stats { gap: 32px; padding: 24px 20px; }
+  h1 { font-size: 40px; }
+  .section { padding: 64px 20px; }
+  .pain-grid { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; }
+  .step:first-child { border-radius: 16px 0 0 0; }
+  .step:nth-child(2) { border-radius: 0 16px 0 0; }
+  .step:nth-child(3) { border-radius: 0 0 0 16px; }
+  .step:last-child { border-radius: 0 0 16px 0; }
+  .diff-grid { grid-template-columns: 1fr; }
+  .diff-card.featured { grid-column: span 1; }
+  .who-grid { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .guarantee { margin: 0 20px; padding: 40px 24px; }
+  footer { padding: 32px 20px; }
+}
 </style>
 </head>
 <body>
-<div class="container">
 
-  <div class="header">
-    <span class="logo">MATCHD — ROI CALCULATOR</span>
-    <h1>How much is your <span>sponsorship worth?</span></h1>
-    <p class="subtitle">Move the sliders to see your estimated ROI — before you spend a single euro.</p>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">MATCHD</a>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#who">For athletes</a>
+    <a href="https://metarem-pixel.github.io/matchd/" target="_blank">ROI Tools</a>
+    <a href="https://tally.so/r/QKBLkG" class="nav-cta">Join waitlist</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Munich · Beta · Free to join</div>
+  <h1>Find your athlete.<br><em>Prove the ROI.</em></h1>
+  <p class="hero-sub">Local athlete. Local business. Guaranteed ROI report after every deal. From €150.</p>
+  <div class="hero-actions">
+    <a href="https://tally.so/r/QKBLkG" class="btn-primary" style="font-size:17px;padding:18px 40px">Find my athlete →</a>
+    <a href="https://tally.so/r/ODBvQR" class="btn-outline">I'm an Athlete</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <span class="stat-num">48h</span>
+    <span class="stat-lbl">TO FIRST MATCH</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">€150</span>
+    <span class="stat-lbl">MINIMUM DEAL</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">2.5×</span>
+    <span class="stat-lbl">ATHLETE VS AD ENGAGEMENT</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">100%</span>
+    <span class="stat-lbl">DEALS WITH ROI REPORT</span>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="section">
+  <span class="section-eyebrow">THE PROBLEM</span>
+  <h2>Why sponsorship<br><em>doesn't work</em> today</h2>
+  <p class="section-sub">Three problems. One industry. No one solved them for small businesses — until now.</p>
+
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="pain-competitor">PROBLEM 01</div>
+      <div class="pain-title">Hidden prices and zero transparency.</div>
+      <div class="pain-desc">Most sponsorship platforms don't show prices. For a small business, this immediately creates a barrier. You can't evaluate the value before committing to a conversation.</div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-competitor">PROBLEM 02</div>
+      <div class="pain-title">You reach out. Nobody responds.</div>
+      <div class="pain-desc">The industry average response rate for sponsorship proposals is deeply disappointing. Months pass. Budgets are spent on platforms. Results? Hard to find.</div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-competitor">PROBLEM 03</div>
+      <div class="pain-title">You pay. You never know what you got.</div>
+      <div class="pain-desc">73% of marketers say ROI measurement is their #1 problem with sponsorships. The industry has no standard way to measure results for small businesses. Until now.</div>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="section-label">Sport type</div>
-    <div class="sport-grid" id="sports">
-      <button class="sport-btn on" onclick="setSport(this,1.2)">Fitness / CrossFit</button>
-      <button class="sport-btn" onclick="setSport(this,1.3)">Combat sports</button>
-      <button class="sport-btn" onclick="setSport(this,1.0)">Running / Triathlon</button>
-      <button class="sport-btn" onclick="setSport(this,1.1)">Cycling</button>
-      <button class="sport-btn" onclick="setSport(this,0.9)">Amateur football</button>
+  <div style="margin-top:40px;background:var(--gray);border:0.5px solid var(--border);border-radius:16px;padding:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px">
+    <div>
+      <div style="font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:.08em;margin-bottom:8px">CALCULATE BEFORE YOU COMMIT</div>
+      <div style="font-size:18px;font-weight:500;margin-bottom:6px">See your ROI before spending a euro.</div>
+      <div style="font-size:14px;color:var(--muted)">Move the sliders → get your expected reach, ad value and ROI coefficient.</div>
     </div>
+    <a href="https://metarem-pixel.github.io/matchd/matchd-tool.html" target="_blank" class="btn-primary" style="white-space:nowrap">Open ROI Calculator →</a>
+  </div>
+</section>
 
-    <div class="section-label">Deal parameters</div>
+<div class="divider"></div>
 
-    <div class="slider-row">
-      <div class="slider-meta">
-        <span class="slider-label">Sponsorship budget</span>
-        <span class="slider-val" id="budget-out">€300</span>
-      </div>
-      <input type="range" id="budget" min="100" max="2000" step="50" value="300" oninput="calc()">
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <span class="section-eyebrow">HOW IT WORKS</span>
+  <h2>From idea to<br><em>report</em> in 4 steps</h2>
+  <p class="section-sub">No agencies. No long negotiations. No surprises.</p>
+
+  <div class="steps">
+    <div class="step">
+      <span class="step-num">01</span>
+      <div class="step-title">You describe your audience</div>
+      <div class="step-desc">Tell us who your customers are. Our AI finds the best athlete type for your business.</div>
+      <div class="step-time">2 MINUTES</div>
     </div>
-
-    <div class="slider-row">
-      <div class="slider-meta">
-        <span class="slider-label">Athlete followers</span>
-        <span class="slider-val" id="followers-out">5,000</span>
-      </div>
-      <input type="range" id="followers" min="1000" max="50000" step="500" value="5000" oninput="calc()">
+    <div class="step">
+      <span class="step-num">02</span>
+      <div class="step-title">We match you with 3 athletes</div>
+      <div class="step-desc">Local, verified, active. You see their reach, engagement rate and price before committing.</div>
+      <div class="step-time">48 HOURS</div>
     </div>
-
-    <div class="slider-row">
-      <div class="slider-meta">
-        <span class="slider-label">Number of posts</span>
-        <span class="slider-val" id="posts-out">3 posts</span>
-      </div>
-      <input type="range" id="posts" min="1" max="10" step="1" value="3" oninput="calc()">
+    <div class="step">
+      <span class="step-num">03</span>
+      <div class="step-title">Athlete publishes content</div>
+      <div class="step-desc">Post, Reels, TikTok — agreed in advance. You approve the content before it goes live.</div>
+      <div class="step-time">YOUR DEADLINE</div>
+    </div>
+    <div class="step">
+      <span class="step-num">04</span>
+      <div class="step-title">You receive a ROI report</div>
+      <div class="step-desc">Reach, engagement, ad equivalent value, brand lift. In your inbox. Every time.</div>
+      <div class="step-time">AUTOMATICALLY</div>
     </div>
   </div>
 
-  <div class="results-grid">
-    <div class="result-card">
-      <div class="result-val" id="reach">—</div>
-      <div class="result-lbl">Total audience reach</div>
+  <div style="text-align:center">
+    <a href="https://metarem-pixel.github.io/matchd/" class="btn-primary" target="_blank">Calculate your ROI first →</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHY MATCHD -->
+<section class="section">
+  <span class="section-eyebrow">WHY MATCHD</span>
+  <h2>What no one else<br><em>offers</em></h2>
+  <p class="section-sub">Three things that make Matchd different — backed by data, not promises.</p>
+
+  <div class="diff-grid">
+    <div class="diff-card featured">
+      <span class="diff-icon">📊</span>
+      <div class="diff-title">ROI guarantee — or we refund part of your money</div>
+      <div class="diff-desc">Every deal ends with an automated report: reach, engagement, ad equivalent value. If actual reach is 20%+ below what was agreed — you get a partial refund. No other sponsorship platform in Europe makes this promise. This is not a feature. It's our business model.</div>
     </div>
-    <div class="result-card">
-      <div class="result-val" id="cpm">—</div>
-      <div class="result-lbl">Cost per 1,000 contacts</div>
+    <div class="diff-card">
+      <span class="diff-icon">📍</span>
+      <div class="diff-title">Hyperlocal. Munich first.</div>
+      <div class="diff-desc">A Munich physiotherapy clinic doesn't need a boxer from Berlin. We match local businesses with local athletes. Same city. Same community. Higher trust, higher conversion.</div>
     </div>
-    <div class="result-card hero">
-      <div class="result-val" id="adval">—</div>
-      <div class="result-lbl">Ad equivalent value</div>
-    </div>
-    <div class="result-card hero">
-      <div class="result-val" id="roi">—</div>
-      <div class="result-lbl">Your ROI coefficient</div>
+    <div class="diff-card">
+      <span class="diff-icon">⚡</span>
+      <div class="diff-title">€150 entry point. No subscriptions.</div>
+      <div class="diff-desc">Most platforms charge monthly subscriptions regardless of results. We start at €150 per deal. Pay after you see the ROI report. Zero ongoing commitment. Zero risk.</div>
     </div>
   </div>
+</section>
 
-  <div class="card">
-    <div class="section-label">Matchd vs. targeted advertising</div>
-    <table class="comparison-table">
-      <tr>
-        <td>Reach</td>
-        <td class="them" id="cmp-them-reach">—</td>
-        <td class="vs-label">vs</td>
-        <td class="us" id="cmp-us-reach">—</td>
-      </tr>
-      <tr>
-        <td>Cost</td>
-        <td class="them">Same budget</td>
-        <td class="vs-label">vs</td>
-        <td class="us">Same budget</td>
-      </tr>
-      <tr>
-        <td>Audience trust</td>
-        <td class="them">Banner ad</td>
-        <td class="vs-label">vs</td>
-        <td class="us">Athlete rec.</td>
-      </tr>
-      <tr>
-        <td>ROI report</td>
-        <td class="them">No guarantee</td>
-        <td class="vs-label">vs</td>
-        <td class="us">Guaranteed</td>
-      </tr>
+<div class="divider"></div>
+
+<!-- COMPARISON -->
+<section class="section">
+  <span class="section-eyebrow">COMPARISON</span>
+  <h2>Matchd vs<br><em>the alternatives</em></h2>
+  <p class="section-sub">Based on real user reviews from Capterra, G2, and OMR.</p>
+
+  <div class="compare-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="matchd">Matchd</th>
+          <th>Platform A</th>
+          <th>Platform B</th>
+          <th>Cold outreach</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Transparent pricing</td>
+          <td class="yes matchd-col"><span class="check">✓</span> From €150</td>
+          <td class="no">✗ Hidden</td>
+          <td class="no">✗ Monthly fee</td>
+          <td class="no">✗ Unknown</td>
+        </tr>
+        <tr>
+          <td>ROI report after deal</td>
+          <td class="yes matchd-col"><span class="check">✓</span> Every deal</td>
+          <td class="no">✗ None</td>
+          <td class="no">✗ Broken</td>
+          <td class="no">✗ Manual</td>
+        </tr>
+        <tr>
+          <td>Response guarantee</td>
+          <td class="yes matchd-col"><span class="check">✓</span> 48 hours</td>
+          <td class="no">✗ None</td>
+          <td class="no">✗ None</td>
+          <td class="no">✗ None</td>
+        </tr>
+        <tr>
+          <td>Local matching</td>
+          <td class="yes matchd-col"><span class="check">✓</span> City-level</td>
+          <td class="no">✗ No filter</td>
+          <td class="no">✗ No filter</td>
+          <td class="no">✗ None</td>
+        </tr>
+        <tr>
+          <td>Partial refund if underperformed</td>
+          <td class="yes matchd-col"><span class="check">✓</span> Yes</td>
+          <td class="no">✗ No</td>
+          <td class="no">✗ No</td>
+          <td class="no">✗ No</td>
+        </tr>
+        <tr>
+          <td>No subscription required</td>
+          <td class="yes matchd-col"><span class="check">✓</span> Per deal</td>
+          <td class="no">✗ Required</td>
+          <td class="no">✗ Required</td>
+          <td class="yes">✓ Free</td>
+        </tr>
+      </tbody>
     </table>
-    <div class="verdict-box" id="verdict">Move the sliders to calculate your ROI.</div>
   </div>
 
-  <div class="cta-section">
-    <p>Ready to find your athlete?</p>
-    <p class="sub">Get 3 matched proposals in 48 hours — or it's free.</p>
-    <a href="https://tally.so/r/MeJW1p" class="cta-btn">Get Matchd →</a>
+  <div style="text-align:center;margin-top:40px">
+    <a href="https://tally.so/r/QKBLkG" class="btn-primary" style="font-size:16px;padding:16px 36px">Start your first deal →</a>
   </div>
+</section>
+<section class="section" id="who">
+  <span class="section-eyebrow">FOR WHO</span>
+  <h2>Built for two<br><em>kinds of people</em></h2>
 
-  <div class="footer">matchd.eu — sport meets business · proven.</div>
+  <div class="who-grid">
+    <div class="who-card business">
+      <span class="who-label">FOR BUSINESSES</span>
+      <div class="who-title">Local businesses that want measurable marketing</div>
+      <ul class="who-list">
+        <li>Physiotherapy, gyms, fitness studios</li>
+        <li>Sports equipment & nutrition stores</li>
+        <li>Cafés, restaurants near sports venues</li>
+        <li>Startups that want authentic audience reach</li>
+        <li>Anyone with €150–€2,000 marketing budget</li>
+      </ul>
+      <a href="https://tally.so/r/QKBLkG" class="who-cta">Find my athlete →</a>
+    </div>
+    <div class="who-card athlete">
+      <span class="who-label">FOR ATHLETES</span>
+      <div class="who-title">Local athletes who want to monetise their audience</div>
+      <ul class="who-list">
+        <li>Fitness, CrossFit, combat sports, running</li>
+        <li>1,000–50,000 followers on Instagram or TikTok</li>
+        <li>Active, posting regularly, engaged community</li>
+        <li>Ready to work with local brands professionally</li>
+        <li>Looking for fair, transparent deals</li>
+      </ul>
+      <a href="https://tally.so/r/ODBvQR" class="who-cta">Join as athlete →</a>
+    </div>
+  </div>
+</section>
 
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <span class="section-eyebrow">PRICING</span>
+  <h2>Simple pricing.<br><em>No surprises.</em></h2>
+  <p class="section-sub">Pay per deal. No monthly subscription. Commission only after you receive the ROI report.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card">
+      <span class="price-name">STARTER</span>
+      <div class="price-amount">€99</div>
+      <div class="price-per">per deal · 1–5K followers</div>
+      <ul class="price-features">
+        <li>1 post or Story</li>
+        <li>Athlete profile verified</li>
+        <li>Reach report included</li>
+        <li>Basic ROI calculation</li>
+        <li>Matchd commission: 15%</li>
+      </ul>
+    </div>
+    <div class="price-card featured">
+      <div class="price-badge">MOST POPULAR</div>
+      <span class="price-name">CORE</span>
+      <div class="price-amount">€150–300</div>
+      <div class="price-per">per deal · 5–20K followers</div>
+      <ul class="price-features">
+        <li>3 posts or Reels</li>
+        <li>Athlete with proven engagement</li>
+        <li>Full ROI report with EMV</li>
+        <li>Brand lift measurement</li>
+        <li>Refund if reach underperforms</li>
+      </ul>
+    </div>
+    <div class="price-card">
+      <span class="price-name">PRO</span>
+      <div class="price-amount">€500+</div>
+      <div class="price-per">per deal · 20K+ followers</div>
+      <ul class="price-features">
+        <li>Long-term partnership</li>
+        <li>Monthly ROI reporting</li>
+        <li>TikTok + Reels + Stories</li>
+        <li>Priority matching in 24h</li>
+        <li>Dedicated Matchd manager</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<div class="guarantee">
+  <span class="section-eyebrow" style="display:block;margin-bottom:16px">OUR PROMISE</span>
+  <h2>If the reach falls short,<br><em>you get money back.</em></h2>
+  <p class="section-sub">If real reach is 20%+ below the agreed number — we refund the proportional amount. No questions asked. This is what makes Matchd different from every other platform in Europe.</p>
+  <a href="https://tally.so/r/QKBLkG" class="btn-primary">Find my athlete →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">MATCHD</div>
+  <div class="footer-text">Munich, Germany · matchd.eu · 2026</div>
+  <div class="footer-text">sport meets business · proven.</div>
+</footer>
+
+<!-- STICKY CTA -->
+<div style="position:fixed;bottom:0;left:0;right:0;z-index:200;padding:16px 24px;background:rgba(11,11,11,0.95);backdrop-filter:blur(12px);border-top:0.5px solid #232323;display:flex;justify-content:space-between;align-items:center;gap:16px" id="sticky">
+  <div>
+    <div style="font-size:14px;font-weight:500">Ready to find your athlete?</div>
+    <div style="font-size:12px;color:#666;font-family:'DM Mono',monospace">Munich · From €150 · ROI guaranteed</div>
+  </div>
+  <div style="display:flex;gap:10px;flex-shrink:0">
+    <a href="https://tally.so/r/ODBvQR" style="padding:10px 18px;border:0.5px solid #333;border-radius:100px;font-size:13px;color:#aaa;text-decoration:none;white-space:nowrap;transition:all .15s" onmouseover="this.style.borderColor='#00e87a';this.style.color='#00e87a'" onmouseout="this.style.borderColor='#333';this.style.color='#aaa'">I'm an Athlete</a>
+    <a href="https://tally.so/r/QKBLkG" style="padding:10px 22px;background:#00e87a;color:#000;border-radius:100px;font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap">Find my athlete →</a>
+  </div>
 </div>
 
 <script>
-let sportMult = 1.2;
-
-function setSport(btn, mult) {
-  document.querySelectorAll('.sport-btn').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-  sportMult = mult;
-  calc();
-}
-
-function fmt(n) {
-  return new Intl.NumberFormat('en-EU').format(Math.round(n));
-}
-
-function calc() {
-  const budget = parseInt(document.getElementById('budget').value);
-  const followers = parseInt(document.getElementById('followers').value);
-  const posts = parseInt(document.getElementById('posts').value);
-
-  document.getElementById('budget-out').textContent = '€' + fmt(budget);
-  document.getElementById('followers-out').textContent = fmt(followers);
-  document.getElementById('posts-out').textContent = posts + (posts === 1 ? ' post' : ' posts');
-
-  const reachRate = 0.18 * sportMult;
-  const reachPerPost = Math.round(followers * reachRate);
-  const totalReach = reachPerPost * posts;
-  const cpm = 5.5;
-  const adValue = Math.round(totalReach / 1000 * cpm);
-  const roiCoeff = (adValue / budget).toFixed(1);
-  const cpmActual = (budget / totalReach * 1000).toFixed(2);
-  const targetReach = Math.round(budget / cpm * 1000);
-
-  document.getElementById('reach').textContent = fmt(totalReach);
-  document.getElementById('cpm').textContent = '€' + parseFloat(cpmActual).toFixed(2);
-  document.getElementById('adval').textContent = '€' + fmt(adValue);
-  document.getElementById('roi').textContent = roiCoeff + 'x';
-
-  document.getElementById('cmp-them-reach').textContent = fmt(targetReach);
-  document.getElementById('cmp-us-reach').textContent = fmt(totalReach);
-
-  let verdict = '';
-  if (roiCoeff >= 2) {
-    verdict = `You invest €${fmt(budget)} and reach ~${fmt(totalReach)} people — equivalent to buying €${fmt(adValue)} in targeted ads. Plus the authentic trust of an athlete's recommendation. ROI: ${roiCoeff}x.`;
-  } else if (roiCoeff >= 1) {
-    verdict = `Comparable reach to targeted ads at the same cost — but with a live athlete endorsement and a guaranteed ROI report after the deal.`;
-  } else {
-    verdict = `Try increasing your budget or choosing an athlete with more followers to make the ROI compelling.`;
-  }
-  document.getElementById('verdict').textContent = verdict;
-}
-
-calc();
+const sticky = document.getElementById('sticky');
+window.addEventListener('scroll', () => {
+  sticky.style.display = window.scrollY > 400 ? 'flex' : 'none';
+});
+sticky.style.display = 'none';
 </script>
+
 </body>
 </html>
