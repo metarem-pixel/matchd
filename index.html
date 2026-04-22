@@ -708,15 +708,119 @@ footer {
     </div>
   </div>
 
-  <div style="margin-top:40px;background:var(--gray);border:0.5px solid var(--border);border-radius:16px;padding:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px">
-    <div>
-      <div style="font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:.08em;margin-bottom:8px">CALCULATE BEFORE YOU COMMIT</div>
-      <div style="font-size:18px;font-weight:500;margin-bottom:6px">See your ROI before spending a euro.</div>
-      <div style="font-size:14px;color:var(--muted)">Move the sliders → get your expected reach, ad value and ROI coefficient.</div>
+  <div style="margin-top:40px;background:var(--gray);border:0.5px solid var(--border);border-radius:20px;padding:36px;" id="calc-section">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:.08em;margin-bottom:6px">ROI CALCULATOR</div>
+    <div style="font-size:20px;font-weight:500;margin-bottom:4px">See your ROI before spending a euro.</div>
+    <div style="font-size:14px;color:var(--muted);margin-bottom:28px">Move the sliders — get your expected reach, ad value and ROI in seconds.</div>
+
+    <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;margin-bottom:12px">SPORT TYPE</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px" id="sport-btns">
+      <button onclick="setSportL(this,1.2)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--green);background:var(--green-dim);color:var(--green);font-family:var(--sans);font-size:13px;cursor:pointer">Fitness / CrossFit</button>
+      <button onclick="setSportL(this,1.3)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer">Combat Sports</button>
+      <button onclick="setSportL(this,1.0)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer">Running</button>
+      <button onclick="setSportL(this,1.1)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer">Cycling</button>
+      <button onclick="setSportL(this,0.9)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer">Football</button>
+      <button onclick="setSportL(this,1.15)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer">Yoga / Wellness</button>
     </div>
-    <a href="https://metarem-pixel.github.io/matchd/matchd-tool.html" target="_blank" class="btn-primary" style="white-space:nowrap">Open ROI Calculator →</a>
+
+    <div style="margin-bottom:20px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span style="font-size:13px;color:var(--muted)">Sponsorship budget</span>
+        <span style="font-family:var(--mono);font-size:14px;font-weight:500" id="l-budget-out">€300</span>
+      </div>
+      <input type="range" id="l-budget" min="100" max="2000" step="50" value="300" oninput="calcL()" style="-webkit-appearance:none;width:100%;height:3px;background:var(--border);border-radius:2px;outline:none">
+    </div>
+
+    <div style="margin-bottom:20px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span style="font-size:13px;color:var(--muted)">Athlete followers</span>
+        <span style="font-family:var(--mono);font-size:14px;font-weight:500" id="l-followers-out">5,000</span>
+      </div>
+      <input type="range" id="l-followers" min="1000" max="50000" step="500" value="5000" oninput="calcL()" style="-webkit-appearance:none;width:100%;height:3px;background:var(--border);border-radius:2px;outline:none">
+    </div>
+
+    <div style="margin-bottom:28px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+        <span style="font-size:13px;color:var(--muted)">Number of posts</span>
+        <span style="font-family:var(--mono);font-size:14px;font-weight:500" id="l-posts-out">3 posts</span>
+      </div>
+      <input type="range" id="l-posts" min="1" max="10" step="1" value="3" oninput="calcL()" style="-webkit-appearance:none;width:100%;height:3px;background:var(--border);border-radius:2px;outline:none">
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:20px">
+      <div style="background:var(--gray-mid);border-radius:12px;padding:16px;border:0.5px solid var(--border)">
+        <div style="font-family:var(--mono);font-size:18px;font-weight:500;color:var(--white);margin-bottom:4px" id="l-reach">—</div>
+        <div style="font-size:11px;color:var(--muted)">Total reach</div>
+      </div>
+      <div style="background:var(--gray-mid);border-radius:12px;padding:16px;border:0.5px solid var(--border)">
+        <div style="font-family:var(--mono);font-size:18px;font-weight:500;color:var(--white);margin-bottom:4px" id="l-cpm">—</div>
+        <div style="font-size:11px;color:var(--muted)">CPM</div>
+      </div>
+      <div style="background:var(--green-dim);border-radius:12px;padding:16px;border:0.5px solid var(--green-mid)">
+        <div style="font-family:var(--mono);font-size:18px;font-weight:500;color:var(--green);margin-bottom:4px" id="l-adval">—</div>
+        <div style="font-size:11px;color:#5de8a0">Ad equivalent</div>
+      </div>
+      <div style="background:var(--green-dim);border-radius:12px;padding:16px;border:0.5px solid var(--green-mid)">
+        <div style="font-family:var(--mono);font-size:18px;font-weight:500;color:var(--green);margin-bottom:4px" id="l-roi">—</div>
+        <div style="font-size:11px;color:#5de8a0">ROI coefficient</div>
+      </div>
+    </div>
+
+    <div style="background:var(--green-dim);border:0.5px solid var(--green-mid);border-radius:12px;padding:16px 20px;font-size:14px;color:#a0f0c8;line-height:1.7;margin-bottom:20px" id="l-verdict">Move the sliders to calculate your ROI.</div>
+
+    <a href="https://tally.so/r/QKBLkG" class="btn-primary">Get this ROI for real →</a>
   </div>
 </section>
+
+<style>
+#calc-section input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#00e87a;cursor:pointer;
+}
+#calc-section input[type=range]::-moz-range-thumb {
+  width:18px;height:18px;border-radius:50%;background:#00e87a;cursor:pointer;border:none;
+}
+#sport-btns button:hover { opacity:.8; }
+</style>
+
+<script>
+var lSportMult = 1.2;
+function setSportL(btn, mult) {
+  lSportMult = mult;
+  document.querySelectorAll('#sport-btns button').forEach(b => {
+    b.style.background = 'transparent';
+    b.style.borderColor = '#2a2a2a';
+    b.style.color = '#888';
+  });
+  btn.style.background = 'var(--green-dim)';
+  btn.style.borderColor = 'var(--green)';
+  btn.style.color = '#00e87a';
+  calcL();
+}
+function fmtL(n) { return new Intl.NumberFormat('en-EU').format(Math.round(n)); }
+function calcL() {
+  var budget = parseInt(document.getElementById('l-budget').value);
+  var followers = parseInt(document.getElementById('l-followers').value);
+  var posts = parseInt(document.getElementById('l-posts').value);
+  document.getElementById('l-budget-out').textContent = '€' + fmtL(budget);
+  document.getElementById('l-followers-out').textContent = fmtL(followers);
+  document.getElementById('l-posts-out').textContent = posts + (posts===1?' post':' posts');
+  var reach = Math.round(followers * 0.18 * lSportMult) * posts;
+  var adVal = Math.round(reach / 1000 * 5.5);
+  var roi = (adVal / budget).toFixed(1);
+  var cpm = (budget / reach * 1000).toFixed(2);
+  document.getElementById('l-reach').textContent = fmtL(reach);
+  document.getElementById('l-cpm').textContent = '€' + cpm;
+  document.getElementById('l-adval').textContent = '€' + fmtL(adVal);
+  document.getElementById('l-roi').textContent = roi + 'x';
+  var v = roi >= 2
+    ? 'You invest €'+fmtL(budget)+' and reach ~'+fmtL(reach)+' people — equivalent to €'+fmtL(adVal)+' in targeted ads. ROI: '+roi+'x.'
+    : roi >= 1
+    ? 'Comparable reach to targeted ads — but with a live athlete endorsement and a guaranteed ROI report.'
+    : 'Try increasing your budget or choosing an athlete with more followers.';
+  document.getElementById('l-verdict').textContent = v;
+}
+calcL();
+</script>
 
 <div class="divider"></div>
 
@@ -751,10 +855,6 @@ footer {
       <div class="step-desc">Reach, engagement, ad equivalent value, brand lift. In your inbox. Every time.</div>
       <div class="step-time">AUTOMATICALLY</div>
     </div>
-  </div>
-
-  <div style="text-align:center">
-    <a href="https://metarem-pixel.github.io/matchd/" class="btn-primary" target="_blank">Calculate your ROI first →</a>
   </div>
 </section>
 
