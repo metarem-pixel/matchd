@@ -127,41 +127,7 @@ footer { border-top: 0.5px solid var(--border); padding: 48px 40px; display: fle
   <div class="stat"><span class="stat-num">2.5×</span><span class="stat-lbl">ATHLETE VS AD ENGAGEMENT</span></div>
   <div class="stat"><span class="stat-num">100%</span><span class="stat-lbl">DEALS WITH ROI REPORT</span></div>
 </div>
-<section class="section">
-  <span class="section-eyebrow">THE PROBLEM</span>
-  <h2>Why sponsorship<br><em>doesn't work</em> today</h2>
-  <p class="section-sub">Three problems. One industry.</p>
-  <div class="pain-grid">
-    <div class="pain-card"><div class="pain-competitor">PROBLEM 01</div><div class="pain-title">Hidden prices and zero transparency.</div><div class="pain-desc">Most sponsorship platforms don't show prices. For a small business, this immediately creates a barrier. You can't evaluate the value before committing to a conversation.</div></div>
-    <div class="pain-card"><div class="pain-competitor">PROBLEM 02</div><div class="pain-title">You reach out. Nobody responds.</div><div class="pain-desc">You reach out to athletes directly. Most never reply. Weeks pass with no result.</div></div>
-    <div class="pain-card"><div class="pain-competitor">PROBLEM 03</div><div class="pain-title">You pay. You never know what you got.</div><div class="pain-desc">You pay for the post. It goes live. Then silence — no data, no report, no way to know if it worked.</div></div>
-  </div>
-  <div style="margin-top:40px;background:var(--gray);border:0.5px solid var(--border);border-radius:20px;padding:36px;" id="calc-section">
-    <div style="font-family:var(--mono);font-size:11px;color:var(--green);letter-spacing:.08em;margin-bottom:6px">ROI CALCULATOR</div>
-    <div style="font-size:20px;font-weight:500;margin-bottom:4px">See your ROI before spending a euro.</div>
-    <div style="font-size:14px;color:var(--muted);margin-bottom:28px">Move the sliders — get your expected reach, ad value and ROI in seconds.</div>
-    <div style="font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;margin-bottom:12px">SPORT TYPE</div>
-    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px" id="sport-btns">
-      <button onclick="setSportL(this,1.2)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--green-mid);background:var(--green-dim);color:var(--green);font-family:var(--sans);font-size:13px;cursor:pointer">Fitness / CrossFit</button>
-      <button onclick="setSportL(this,1.3)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer">Combat Sports</button>
-      <button onclick="setSportL(this,1.0)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer">Running</button>
-      <button onclick="setSportL(this,1.1)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer">Cycling</button>
-      <button onclick="setSportL(this,0.9)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer">Football</button>
-      <button onclick="setSportL(this,1.15)" style="padding:6px 14px;border-radius:100px;border:0.5px solid var(--border);background:transparent;color:var(--muted);font-family:var(--sans);font-size:13px;cursor:pointer">Yoga / Wellness</button>
-    </div>
-    <div style="margin-bottom:20px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:13px;color:var(--muted)">Sponsorship budget</span><span style="font-family:var(--mono);font-size:14px;font-weight:500" id="l-budget-out">€300</span></div><input type="range" id="l-budget" min="100" max="2000" step="50" value="300" oninput="calcL()" style="-webkit-appearance:none;width:100%;height:3px;background:var(--border);border-radius:2px;outline:none"></div>
-    <div style="margin-bottom:20px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:13px;color:var(--muted)">Athlete followers</span><span style="font-family:var(--mono);font-size:14px;font-weight:500" id="l-followers-out">5,000</span></div><input type="range" id="l-followers" min="1000" max="50000" step="500" value="5000" oninput="calcL()" style="-webkit-appearance:none;width:100%;height:3px;background:var(--border);border-radius:2px;outline:none"></div>
-    <div style="margin-bottom:28px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:13px;color:var(--muted)">Number of posts</span><span style="font-family:var(--mono);font-size:14px;font-weight:500" id="l-posts-out">3 posts</span></div><input type="range" id="l-posts" min="1" max="10" step="1" value="3" oninput="calcL()" style="-webkit-appearance:none;width:100%;height:3px;background:var(--border);border-radius:2px;outline:none"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:20px">
-      <div style="background:var(--gray-mid);border-radius:12px;padding:16px;border:0.5px solid var(--border)"><div style="font-family:var(--mono);font-size:18px;font-weight:500;color:var(--white);margin-bottom:4px" id="l-reach">—</div><div style="font-size:11px;color:var(--muted)">Total reach</div></div>
-      <div style="background:var(--gray-mid);border-radius:12px;padding:16px;border:0.5px solid var(--border)"><div style="font-family:var(--mono);font-size:18px;font-weight:500;color:var(--white);margin-bottom:4px" id="l-cpm">—</div><div style="font-size:11px;color:var(--muted)">CPM</div></div>
-      <div style="background:var(--green-dim);border-radius:12px;padding:16px;border:0.5px solid var(--green-mid)"><div style="font-family:var(--mono);font-size:18px;font-weight:500;color:var(--green);margin-bottom:4px" id="l-adval">—</div><div style="font-size:11px;color:#FFB8A0">Ad equivalent</div></div>
-      <div style="background:var(--green-dim);border-radius:12px;padding:16px;border:0.5px solid var(--green-mid)"><div style="font-family:var(--mono);font-size:18px;font-weight:500;color:var(--green);margin-bottom:4px" id="l-roi">—</div><div style="font-size:11px;color:#FFB8A0">ROI coefficient</div></div>
-    </div>
-    <div style="background:var(--green-dim);border:0.5px solid var(--green-mid);border-radius:12px;padding:16px 20px;font-size:14px;color:#a0f0c8;line-height:1.7;margin-bottom:20px" id="l-verdict">Move the sliders to calculate your ROI.</div>
-    <a href="https://tally.so/r/BzApYe" class="btn-primary">Get this ROI for real →</a>
-  </div>
-</section>
+
 <style>
 #calc-section input[type=range]::-webkit-slider-thumb { -webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#FF6B4A;cursor:pointer; }
 #calc-section input[type=range]::-moz-range-thumb { width:18px;height:18px;border-radius:50%;background:#FF6B4A;cursor:pointer;border:none; }
