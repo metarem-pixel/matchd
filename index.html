@@ -453,7 +453,7 @@ footer {
     <a href="#how">How It Works</a>
     <a href="#athletes">Athletes</a>
     <a href="#team">Team</a>
-    <a href="#athletes" class="nav-cta">Get Started</a>
+    <a href="#matcher" class="nav-cta">Try AI Match</a>
   </div>
 </nav>
 
@@ -533,6 +533,118 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- AI MATCHER -->
+<section id="matcher" style="background:#F0F4FF; padding: 80px 24px;">
+  <div style="max-width:720px; margin:0 auto; text-align:center;">
+    <div class="s-tag" style="justify-content:center; margin-bottom:16px;">AI Matching</div>
+    <h2 style="font-family:'Bebas Neue',cursive; font-size:clamp(32px,5vw,52px); color:var(--ink); letter-spacing:2px; margin-bottom:12px;">Find Your Athlete in 30 Seconds</h2>
+    <p style="color:var(--muted); font-size:16px; margin-bottom:40px;">Tell us about your business — our AI will match you with 3 local athletes from Munich.</p>
+
+    <div style="background:#fff; border-radius:12px; padding:36px; box-shadow:0 4px 24px rgba(15,23,42,.08); text-align:left;">
+      <div style="margin-bottom:20px;">
+        <label style="display:block; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--ink); margin-bottom:8px;">Your Business</label>
+        <input id="m-business" type="text" placeholder="e.g. fitness studio, barbershop, restaurant..." style="width:100%; padding:12px 16px; border:1.5px solid #E2E8F0; border-radius:8px; font-size:15px; font-family:'DM Sans',sans-serif; outline:none; transition:border .2s;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='#E2E8F0'">
+      </div>
+      <div style="margin-bottom:20px;">
+        <label style="display:block; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--ink); margin-bottom:8px;">Budget per Month (€)</label>
+        <select id="m-budget" style="width:100%; padding:12px 16px; border:1.5px solid #E2E8F0; border-radius:8px; font-size:15px; font-family:'DM Sans',sans-serif; outline:none; background:#fff; cursor:pointer;">
+          <option value="200-500">€200–500</option>
+          <option value="500-1000" selected>€500–1,000</option>
+          <option value="1000-2000">€1,000–2,000</option>
+          <option value="2000+">€2,000+</option>
+        </select>
+      </div>
+      <div style="margin-bottom:28px;">
+        <label style="display:block; font-size:12px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--ink); margin-bottom:8px;">What Do You Want? (optional)</label>
+        <input id="m-goal" type="text" placeholder="e.g. Instagram posts, event appearance, brand ambassador..." style="width:100%; padding:12px 16px; border:1.5px solid #E2E8F0; border-radius:8px; font-size:15px; font-family:'DM Sans',sans-serif; outline:none; transition:border .2s;" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='#E2E8F0'">
+      </div>
+      <button id="m-btn" onclick="runMatcher()" style="width:100%; padding:14px; background:var(--blue); color:#fff; border:none; border-radius:8px; font-size:15px; font-weight:600; letter-spacing:.5px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background .2s;">
+        Find My Athletes →
+      </button>
+    </div>
+
+    <!-- Result box -->
+    <div id="m-result" style="display:none; margin-top:28px; background:#fff; border-radius:12px; padding:32px; box-shadow:0 4px 24px rgba(15,23,42,.08); text-align:left;">
+      <div style="font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--blue); font-weight:600; margin-bottom:16px;">Your AI Match</div>
+      <div id="m-text" style="font-size:15px; color:var(--ink); line-height:1.8; white-space:pre-wrap;"></div>
+      <a href="https://tally.so/r/matchd-business" target="_blank" style="display:inline-block; margin-top:24px; padding:12px 28px; background:var(--blue); color:#fff; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none; letter-spacing:.5px;">Book a Free Intro Call →</a>
+    </div>
+
+    <div id="m-error" style="display:none; margin-top:20px; padding:16px; background:#FEF2F2; border-radius:8px; color:#DC2626; font-size:14px;"></div>
+  </div>
+</section>
+
+<script>
+async function runMatcher() {
+  const business = document.getElementById('m-business').value.trim();
+  const budget = document.getElementById('m-budget').value;
+  const goal = document.getElementById('m-goal').value.trim();
+  const btn = document.getElementById('m-btn');
+  const resultBox = document.getElementById('m-result');
+  const errorBox = document.getElementById('m-error');
+  const textEl = document.getElementById('m-text');
+
+  if (!business) {
+    document.getElementById('m-business').focus();
+    document.getElementById('m-business').style.borderColor = '#DC2626';
+    return;
+  }
+
+  btn.textContent = 'Matching...';
+  btn.disabled = true;
+  btn.style.opacity = '.7';
+  resultBox.style.display = 'none';
+  errorBox.style.display = 'none';
+
+  const prompt = `You are the AI matcher for Matchd — a managed marketplace connecting local businesses with local athletes in Munich, Germany.
+
+A business has submitted the following request:
+- Business type: ${business}
+- Monthly budget: €${budget}
+- Goals: ${goal || 'not specified'}
+
+Our current athlete roster in Munich:
+1. Vladyslav Sirenko — professional heavyweight boxer, signed with Zuffa Boxing. 12,700 Instagram followers. Strong Ukrainian community connection. Formats: Instagram posts, stories, Reels. From €300/post.
+2. Ivan Peklin — GT racing driver, competing in Germany. 16,000 Instagram followers. Tech/performance audience. Formats: Instagram posts, sponsor logo on racing suit. From €150/post.
+3. Alena Savchenko — Olympic Champion figure skater, Munich-based. Broader audience, premium brand fit. From €600/post.
+
+Based on the business type and budget, recommend the TOP 1-2 best matches. For each match explain:
+- Why this athlete fits this business
+- What format works best
+- Estimated monthly cost
+
+Keep it concise, practical, and compelling. Write in English. Max 200 words.`;
+
+  try {
+    const res = await fetch('https://matchd-proxy.metarem.workers.dev/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 400,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!res.ok) throw new Error('API error ' + res.status);
+
+    const data = await res.json();
+    const text = data.content?.[0]?.text || 'No response received.';
+
+    textEl.textContent = text;
+    resultBox.style.display = 'block';
+    resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (e) {
+    errorBox.textContent = 'Something went wrong. Please try again or contact hello@matchd.io';
+    errorBox.style.display = 'block';
+  }
+
+  btn.textContent = 'Find My Athletes →';
+  btn.disabled = false;
+  btn.style.opacity = '1';
+}
+</script>
 
 <!-- FOR WHOM -->
 <section id="forwhom">
