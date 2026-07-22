@@ -650,7 +650,13 @@ Keep it concise, practical, and compelling. Write in English. Max 200 words.`;
 <section id="forwhom">
   <div class="forwhom-inner">
     <div class="s-tag">Who It's For</div>
-    <div class="fw-grid">
+
+    <div class="city-toggle" style="display:flex;justify-content:center;gap:8px;margin-bottom:28px;">
+      <button type="button" onclick="setMatchdCity('munich')" id="city-btn-munich" style="padding:8px 20px;border-radius:20px;border:1px solid #ccc;background:#111;color:#fff;cursor:pointer;font-weight:600;">🇩🇪 Munich</button>
+      <button type="button" onclick="setMatchdCity('london')" id="city-btn-london" style="padding:8px 20px;border-radius:20px;border:1px solid #ccc;background:#fff;color:#111;cursor:pointer;font-weight:600;">🇬🇧 London</button>
+    </div>
+
+    <div class="fw-grid" data-city-content="munich">
       <div class="fw-card biz">
         <div class="fw-type">For Businesses</div>
         <div class="fw-title">Local brands that want measurable marketing</div>
@@ -676,8 +682,52 @@ Keep it concise, practical, and compelling. Write in English. Max 200 words.`;
         <a href="https://tally.so/r/VLoBlj" target="_blank" class="btn-green">Join as Athlete →</a>
       </div>
     </div>
+
+    <div class="fw-grid" data-city-content="london" style="display:none;">
+      <div class="fw-card biz">
+        <div class="fw-type">For Businesses</div>
+        <div class="fw-title">Local brands that want measurable marketing</div>
+        <ul class="fw-list">
+          <li>Gyms, boxing clubs, fitness studios</li>
+          <li>Sports equipment &amp; nutrition stores</li>
+          <li>Cafés and restaurants near sports venues</li>
+          <li>Startups targeting active lifestyle audiences</li>
+          <li>Anyone with £150–£2,000 marketing budget</li>
+        </ul>
+        <a href="https://tally.so/r/BzApYe" target="_blank" class="btn-primary">Find My Athlete →</a>
+      </div>
+      <div class="fw-card ath">
+        <div class="fw-type">For Athletes</div>
+        <div class="fw-title">Local talent ready to monetise their community</div>
+        <ul class="fw-list">
+          <li>Fitness, boxing, combat sports, running, cycling</li>
+          <li>1,000–50,000 followers on Instagram or TikTok</li>
+          <li>Active, posting regularly, engaged local audience</li>
+          <li>Ready to work with local brands professionally</li>
+          <li>Looking for fair, transparent, repeatable deals</li>
+        </ul>
+        <a href="https://tally.so/r/VLoBlj" target="_blank" class="btn-green">Join as Athlete →</a>
+      </div>
+    </div>
+
   </div>
 </section>
+<script>
+function setMatchdCity(city) {
+  document.querySelectorAll('[data-city-content]').forEach(function(el) {
+    el.style.display = (el.getAttribute('data-city-content') === city) ? '' : 'none';
+  });
+  var munichBtn = document.getElementById('city-btn-munich');
+  var londonBtn = document.getElementById('city-btn-london');
+  if (city === 'munich') {
+    munichBtn.style.background = '#111'; munichBtn.style.color = '#fff';
+    londonBtn.style.background = '#fff'; londonBtn.style.color = '#111';
+  } else {
+    londonBtn.style.background = '#111'; londonBtn.style.color = '#fff';
+    munichBtn.style.background = '#fff'; munichBtn.style.color = '#111';
+  }
+}
+</script>
 
 <!-- ATHLETES -->
 <section id="athletes">
