@@ -124,3 +124,8 @@ footer nav{display:flex;gap:20px}footer nav a{color:#dce3e9}
 .cta .contact .cbtns .btn{width:100%;text-align:center}
 .cta .contact .mail{justify-content:center;text-align:center;margin-top:14px}
 @media(max-width:900px){.cta .contact{align-items:flex-start;text-align:left}.cta .contact .cbtns .btn{width:auto}.cta .contact .mail{justify-content:flex-start;text-align:left}}
+.nav{justify-content:flex-start}
+.navlinks{margin:0 auto}
+.nav .lang{font-size:13px;font-weight:700;letter-spacing:.08em;color:#cbd2da;border:1px solid #3a4c60;border-radius:999px;padding:8px 12px;margin-right:10px}
+.nav .lang:hover{color:#fff}
+@media(max-width:900px){.nav .lang{margin-left:auto}}
