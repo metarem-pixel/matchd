@@ -134,3 +134,6 @@ footer nav{display:flex;gap:20px}footer nav a{color:#dce3e9}
 .review .avatar{width:52px;height:52px;border-radius:50%;flex:none;display:grid;place-items:center;background:#0b1420;color:#fff;font-weight:700;font-size:16px;letter-spacing:.02em}
 @media(min-width:1101px){.reviews{grid-template-columns:repeat(3,1fr)}.review blockquote{font-size:17px}}
 @media(min-width:1101px){.review figcaption{min-height:104px}}
+
+
+.cell.key .badge{display:table;margin:0 0 14px;border:1px solid #9fb3c6;border-radius:999px;color:#fff;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:6px 12px;white-space:nowrap}
